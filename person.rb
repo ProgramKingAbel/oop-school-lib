@@ -7,13 +7,17 @@ class Person
   end
 
   attr_reader :id
-  attr_accessor :name, :age
+  attr_accessor :name
 
   private
+
+  attr_reader :age
 
   def of_age?
     @age >= 18
   end
+
+  public
 
   def can_use_services?
     of_age? || @parent_permission
