@@ -26,7 +26,7 @@
   - [🙏 Acknowledgments ](#-acknowledgments-)
   - [📝 License ](#-license-)
 
-# 📖 Morse Message <a name="about-project"></a>
+# 📖 OOP <a name="about-project"></a>
 
 
 **OOP** This Repo explains the concepts of OOP that include Abstraction, Encapsulation, Polymorphism and Inheritance
