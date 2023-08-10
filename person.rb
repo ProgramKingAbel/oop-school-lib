@@ -10,12 +10,10 @@ class Person < Nameable
     @rentals = []
   end
 
-  attr_reader :id, :rentals
+  attr_reader :id, :age, :rentals
   attr_accessor :name
 
   private
-
-  attr_reader :age
 
   def of_age?
     @age >= 18
