@@ -74,4 +74,26 @@ class App
   rescue StandardError => e
     puts "An error occured: #{e.message}"
   end
+
+  def create_teacher
+    print 'Enter teacher name'
+    name = gets.chomp
+
+    print 'Enter teacher Age:'
+    age = gets.chomp.to_i
+    until age.positive?
+      print 'Please Enter a Valid Age: > 0'
+      age = gets.chomp.to_i
+    end
+
+    print 'Enter field of specialization'
+    specialization = gets.chomp
+
+    teacher = Teacher.new(age, specialization, name: name)
+    @people << teacher
+
+    puts 'Teacher created Successfully'
+  rescue StandardError => e
+    puts "An error occured: #{e.message}"
+  end
 end
