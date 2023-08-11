@@ -96,4 +96,28 @@ class App
   rescue StandardError => e
     puts "An error occured: #{e.message}"
   end
+
+  def create_book
+    print 'Title: '
+    title = gets.chomp
+
+    until title.strip != ''
+      print 'Title cannot be empty. Please enter a valid title: '
+      title = gets.chomp
+    end
+
+    print 'Enter the Author name: '
+    author = gets.chomp
+
+    until author.strip != ''
+      print 'Author name cannot be empty. Please enter a valid author name: '
+      author = gets.chomp
+    end
+
+    book = Book.new(title, author)
+    @books << book
+    puts 'Book created successfully'
+  rescue StandardError => e
+    puts "An error occurred: #{e.message}"
+  end
 end
