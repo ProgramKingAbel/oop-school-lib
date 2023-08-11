@@ -93,8 +93,6 @@ class App
     @people << teacher
 
     puts 'Teacher created Successfully'
-  rescue StandardError => e
-    puts "An error occured: #{e.message}"
   end
 
   def create_book
@@ -172,5 +170,22 @@ class App
     true
   rescue ArgumentError
     false
+  end
+
+  def list_all_rentals
+    puts 'Please select ID of user from the list'
+    list_all_people
+    person_id = select_valid_person_id
+    puts 'Rentals for Person include:'
+
+    list = []
+    @rentals.each do |rental|
+      if rental.person.id == person_id
+        list << "Date: #{rental.date}, Book: '#{rental.book.title}' by #{rental.book.author}"
+      end
+    end
+    return list.each { |rental| puts rental } unless list.empty?
+
+    puts 'No record found for the selected person'
   end
 end
