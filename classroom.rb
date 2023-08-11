@@ -1,7 +1,7 @@
 require './student'
 
 class Classroom
-  def initialize(label)
+  def initialize(label = 'yourClass')
     @label = label
     @students = []
   end
