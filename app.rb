@@ -91,7 +91,7 @@ class App
     puts 'Enter field of specialization'
     specialization = gets.chomp
 
-    teacher = Teacher.new(age, specialization, name: name)
+    teacher = Teacher.new(age, specialization, name)
     @people << teacher
 
     puts 'Teacher created Successfully'
