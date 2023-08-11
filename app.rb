@@ -120,4 +120,57 @@ class App
   rescue StandardError => e
     puts "An error occurred: #{e.message}"
   end
+
+  def create_rental
+    puts 'Select a book from the following by number'
+    list_all_books
+    book_id = select_valid_book_id
+
+    puts 'Select who is renting the book from the list'
+    list_all_people
+    person_id = select_valid_person_id
+
+    puts 'Enter Date (YYYY-MM-DD): '
+    date = gets.chomp
+
+    until valid_date?(date)
+      puts 'Invalid date format. Please enter a valid date (YYYY-MM-DD): '
+      date = gets.chomp
+    end
+
+    rental = Rental.new(date, @books[book_id], @people[person_id])
+    @rentals << rental
+    puts 'Book rented successfully'
+  rescue StandardError => e
+    puts "Error while creating rental: #{e.message}"
+  end
+
+  def select_valid_book_id
+    print 'Enter the book number: '
+    book_id = gets.chomp.to_i - 1
+    until (0..@books.length - 1).include?(book_id)
+      puts 'Invalid book number. Please select a valid book number.'
+      print 'Enter the book number: '
+      book_id = gets.chomp.to_i - 1
+    end
+    book_id
+  end
+
+  def select_valid_person_id
+    print 'Enter the person number: '
+    person_id = gets.chomp.to_i - 1
+    until (0..@people.length - 1).include?(person_id)
+      puts 'Invalid person number. Please select a valid person number.'
+      print 'Enter the person number: '
+      person_id = gets.chomp.to_i - 1
+    end
+    person_id
+  end
+
+  def valid_date?(date)
+    Date.parse(date)
+    true
+  rescue ArgumentError
+    false
+  end
 end
