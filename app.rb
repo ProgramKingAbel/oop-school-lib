@@ -1,7 +1,9 @@
+require 'date'
 require './student'
 require './teacher'
 require './rental'
 require './book'
+require './classroom'
 
 class App
   attr_reader :books, :people, :rentals
@@ -30,7 +32,7 @@ class App
 
   def create_person
     loop do
-      puts 'Do you want to create a student (1) or a teacher (2)? [Input the number:'
+      puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
       input = gets.chomp
 
       case input
@@ -47,28 +49,28 @@ class App
   end
 
   def create_student
-    print 'Enter Student Age:'
+    puts 'Enter Student Age: '
     age = gets.chomp.to_i
 
     until age.positive?
-      print 'Please Enter a valid age > 0'
+      puts 'Please Enter a valid age: '
       age = gets.chomp.to_i
     end
 
-    print 'Enter Student Name'
+    puts 'Enter Student Name: '
     name = gets.chomp
 
-    print 'Does Student have parent permission to attend events? [Y/N]'
+    puts 'Does Student have parent permission to attend events? [Y/N]'
     permission = gets.chomp.upcase
 
     until %w[Y N].include?(permission)
-      print 'Invalid Input. Please enter Y or N: '
+      puts 'Invalid Input. Please enter Y or N: '
       permission = gets.chomp.upcase
     end
 
     parent_permission = permission == 'Y'
 
-    student = Student.new(age, 'classroom', name: name, parent_permission: parent_permission)
+    student = Student.new(age, Classroom.new, name, parent_permission: parent_permission)
     @people << student
     puts 'Student created successfully'
   rescue StandardError => e
@@ -76,17 +78,17 @@ class App
   end
 
   def create_teacher
-    print 'Enter teacher name'
+    puts 'Enter teacher name: '
     name = gets.chomp
 
-    print 'Enter teacher Age:'
+    puts 'Enter teacher Age:'
     age = gets.chomp.to_i
     until age.positive?
-      print 'Please Enter a Valid Age: > 0'
+      puts 'Please Enter a Valid Age: > 0'
       age = gets.chomp.to_i
     end
 
-    print 'Enter field of specialization'
+    puts 'Enter field of specialization'
     specialization = gets.chomp
 
     teacher = Teacher.new(age, specialization, name: name)
@@ -96,19 +98,19 @@ class App
   end
 
   def create_book
-    print 'Title: '
+    puts 'Title: '
     title = gets.chomp
 
     until title.strip != ''
-      print 'Title cannot be empty. Please enter a valid title: '
+      puts 'Title cannot be empty. Please enter a valid title: '
       title = gets.chomp
     end
 
-    print 'Enter the Author name: '
+    puts 'Enter the Author name: '
     author = gets.chomp
 
     until author.strip != ''
-      print 'Author name cannot be empty. Please enter a valid author name: '
+      puts 'Author name cannot be empty. Please enter a valid author name: '
       author = gets.chomp
     end
 
@@ -120,7 +122,7 @@ class App
   end
 
   def create_rental
-    puts 'Select a book from the following by number'
+    puts 'The following are Available Books.Select a book You want to borrow from the Library'
     list_all_books
     book_id = select_valid_book_id
 
@@ -144,38 +146,38 @@ class App
   end
 
   def select_valid_book_id
-    print 'Enter the book number: '
+    puts 'Enter the book number: '
     book_id = gets.chomp.to_i - 1
     until (0..@books.length - 1).include?(book_id)
       puts 'Invalid book number. Please select a valid book number.'
-      print 'Enter the book number: '
+      puts 'Enter the book number: '
       book_id = gets.chomp.to_i - 1
     end
     book_id
   end
 
   def select_valid_person_id
-    print 'Enter the person number: '
+    puts 'Enter the person number [NOT ID BUT NUMBER FROM LIST]: '
     person_id = gets.chomp.to_i - 1
     until (0..@people.length - 1).include?(person_id)
       puts 'Invalid person number. Please select a valid person number.'
-      print 'Enter the person number: '
+      puts 'Enter the person number: '
       person_id = gets.chomp.to_i - 1
     end
     person_id
   end
 
   def valid_date?(date)
-    Date.parse(date)
+    ::Date.parse(date)
     true
   rescue ArgumentError
     false
   end
 
   def list_all_rentals
-    puts 'Please select ID of user from the list'
+    puts 'Please SELECT [ID] of user from the list Below'
     list_all_people
-    person_id = select_valid_person_id
+    person_id = gets.chomp.to_i
     puts 'Rentals for Person include:'
 
     list = []
