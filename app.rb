@@ -45,4 +45,33 @@ class App
       end
     end
   end
+
+  def create_student
+    print 'Enter Student Age:'
+    age = gets.chomp.to_i
+
+    until age.positive?
+      print 'Please Enter a valid age > 0'
+      age = gets.chomp.to_i
+    end
+
+    print 'Enter Student Name'
+    name = gets.chomp
+
+    print 'Does Student have parent permission to attend events? [Y/N]'
+    permission = gets.chomp.upcase
+
+    until %w[Y N].include?(permission)
+      print 'Invalid Input. Please enter Y or N: '
+      permission = gets.chomp.upcase
+    end
+
+    parent_permission = permission == 'Y'
+
+    student = Student.new(age, 'classroom', name: name, parent_permission: parent_permission)
+    @people << student
+    puts 'Student created successfully'
+  rescue StandardError => e
+    puts "An error occured: #{e.message}"
+  end
 end
